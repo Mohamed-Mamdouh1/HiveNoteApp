@@ -10,7 +10,7 @@ class NotesListView extends StatelessWidget {
     return GestureDetector(
      onTap: (){
        Navigator.push(context, MaterialPageRoute(builder: (ctx){
-         return EditNoteView();
+         return   EditNoteView();
        }));
      },
       child: ListView.builder(

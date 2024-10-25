@@ -12,11 +12,12 @@ class CustomTextFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+
       maxLines: maxLines,
       controller: controller,
       decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: const TextStyle(
+          labelText: hintText,
+          labelStyle: const TextStyle(
             color: Colors.cyanAccent,
             fontSize: 15,
             fontWeight: FontWeight.w400,
