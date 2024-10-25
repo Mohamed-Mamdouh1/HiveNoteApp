@@ -4,7 +4,6 @@ import 'custom_app_bar.dart';
 
 import 'notes_listview.dart';
 
-
 class NoteViewBody extends StatelessWidget {
   const NoteViewBody({Key? key}) : super(key: key);
 
@@ -13,21 +12,14 @@ class NoteViewBody extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
-
         children: const [
           SizedBox(
             height: 20,
           ),
-
           CustomAppBar(),
-
-        Expanded(child: NotesListView())
+          Expanded(child: NotesListView())
         ],
       ),
     );
   }
 }
-
-
-
-
