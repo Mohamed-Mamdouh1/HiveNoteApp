@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_note_app/constant.dart';
 import 'package:hive_note_app/views/notes_view.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
   seedColor: Color.fromARGB(255, 96, 59, 181),
 );
-void main() {
+void main() async {
+ await Hive.initFlutter();
+ await Hive.openBox(kNotesBox);
+
   runApp(const HiveNotes());
 }
 
