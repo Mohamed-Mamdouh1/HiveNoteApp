@@ -9,7 +9,7 @@ var kColorScheme = ColorScheme.fromSeed(
 void main() async {
  await Hive.initFlutter();
  await Hive.openBox(kNotesBox);
-
+ 
   runApp(const HiveNotes());
 }
 
