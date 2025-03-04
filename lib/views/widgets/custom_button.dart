@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
-class CustomTextFiled extends StatelessWidget {
-  const CustomTextFiled(
-      {Key? key,
-        required this.controller,
-        this.maxLines = 1,
-        required this.hintText})
-      : super(key: key);
-  final TextEditingController controller;
-  final int maxLines;
-  final String hintText;
+class CustomButton extends StatelessWidget {
+  const CustomButton({
+    Key? key, required this.text, required this.onPressed,
+  }) : super(key: key);
+  final String text;
+  final void Function()onPressed;
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      maxLines: maxLines,
-      controller: controller,
-      decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: const TextStyle(
-            color: Colors.cyanAccent,
-            fontSize: 15,
-            fontWeight: FontWeight.w400,
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            primary: Colors.cyanAccent,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10))),
+        onPressed:onPressed ,
+        child: Text(
+          text,
+          style: const TextStyle(
+            color: Colors.black,
           ),
-          enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white)),
-          focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xff62fcd7)))),
+        ),
+      ),
     );
   }
 }
