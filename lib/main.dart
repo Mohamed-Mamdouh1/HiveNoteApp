@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_note_app/constant.dart';
+import 'package:hive_note_app/model/note_model.dart';
 import 'package:hive_note_app/views/notes_view.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
@@ -9,6 +10,7 @@ var kColorScheme = ColorScheme.fromSeed(
 void main() async {
  await Hive.initFlutter();
  await Hive.openBox(kNotesBox);
+ Hive.registerAdapter(NoteModelAdapter());
  
   runApp(const HiveNotes());
 }
