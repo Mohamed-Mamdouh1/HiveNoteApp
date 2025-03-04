@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_note_app/constant.dart';
+import 'package:hive_note_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:hive_note_app/model/note_model.dart';
 import 'package:hive_note_app/views/notes_view.dart';
 
@@ -20,29 +22,34 @@ class HiveNotes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        useMaterial3: true,
-        cardTheme: const CardTheme().copyWith(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create:(context){return AddNoteCubit();} ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          useMaterial3: true,
+          cardTheme: const CardTheme().copyWith(
 
-            color: kColorScheme.secondaryContainer,
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            primary: kColorScheme.primaryContainer,
+              color: kColorScheme.secondaryContainer,
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              primary: kColorScheme.primaryContainer,
+            ),
+          ),
+          textTheme: ThemeData().textTheme.copyWith(
+            titleLarge: TextStyle(
+              color: kColorScheme.onPrimaryContainer,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-        textTheme: ThemeData().textTheme.copyWith(
-          titleLarge: TextStyle(
-            color: kColorScheme.onPrimaryContainer,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        home: const NotesView(),
       ),
-      home: const NotesView(),
     );
   }
 }
