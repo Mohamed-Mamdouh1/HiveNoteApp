@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_note_app/cubits/add_note_cubit/add_note_cubit.dart';
+import 'package:hive_note_app/model/note_model.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import 'custom_button.dart';
@@ -23,9 +24,10 @@ class _AddNoteState extends State<AddNote> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(18),
-      child: SingleChildScrollView(
+    return BlocProvider(
+      create: (context) => AddNoteCubit(),
+      child: Container(
+        padding: const EdgeInsets.all(18),
         child: BlocConsumer<AddNoteCubit, AddNoteState>(
           listener: (context, state) {
             if (state is AddNoteFailure) {
@@ -36,27 +38,42 @@ class _AddNoteState extends State<AddNote> {
             }
           },
           builder: (context, state) {
-            return ModalProgressHUD(
-              inAsyncCall: state is AddNoteLoading ? true : false,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  AddNoteForm(title: title, content: content),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  CustomButton(
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        formKey.currentState!.save();
-                      } else {
-                        autoValidateMode = AutovalidateMode.always;
-                        setState(() {});
-                      }
-                    },
-                    text: 'Add',
-                  )
-                ],
+            return AbsorbPointer(
+              absorbing: state is AddNoteLoading ? true :false,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AddNoteForm(title: title, content: content),
+                    const SizedBox(
+                      height: 32,
+                    ),
+                    BlocBuilder<AddNoteCubit, AddNoteState>(
+                      builder: (context, state) {
+                        return CustomButton(
+                          isLoading:  state is AddNoteLoading ? true : false,
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              formKey.currentState!.save();
+
+                              var noteModel = NoteModel(
+                                  title: title.text,
+                                  content: content.text,
+                                  date: DateTime.now().toString(),
+                                  color: Colors.deepPurpleAccent.value);
+                              BlocProvider.of<AddNoteCubit>(context)
+                                  .addNote(noteModel);
+                            } else {
+                              autoValidateMode = AutovalidateMode.always;
+                              setState(() {});
+                            }
+                          },
+                          text: 'Add',
+                        );
+                      },
+                    )
+                  ],
+                ),
               ),
             );
           },
