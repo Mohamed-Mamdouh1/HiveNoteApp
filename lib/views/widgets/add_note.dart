@@ -27,7 +27,7 @@ class _AddNoteState extends State<AddNote> {
     return BlocProvider(
       create: (context) => AddNoteCubit(),
       child: Container(
-        padding: const EdgeInsets.all(18),
+        padding:  EdgeInsets.only(left: 18,right: 18,top: 18, bottom: MediaQuery.of(context).viewInsets.bottom),
         child: BlocConsumer<AddNoteCubit, AddNoteState>(
           listener: (context, state) {
             if (state is AddNoteFailure) {
