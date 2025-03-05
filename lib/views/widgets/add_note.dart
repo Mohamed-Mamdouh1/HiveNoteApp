@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_note_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:hive_note_app/model/note_model.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+
 
 import 'custom_button.dart';
 import 'custom_text_field.dart';
