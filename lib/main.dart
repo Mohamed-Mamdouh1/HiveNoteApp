@@ -14,13 +14,15 @@ void main() async {
  await Hive.initFlutter();
  Bloc.observer= SBlocObserver();
  Hive.registerAdapter(NoteModelAdapter());
- await Hive.openBox(kNotesBox);
-  runApp(const HiveNotes());
+  Box<NoteModel> notesBox = await Hive.openBox(kNotesBox);
+  runApp(HiveNotes(
+    notesBox: notesBox,
+  ));
 }
 
 class HiveNotes extends StatelessWidget {
-  const HiveNotes({Key? key}) : super(key: key);
-
+  const HiveNotes({Key? key, required this.notesBox}) : super(key: key);
+  final Box<NoteModel> notesBox;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -45,7 +47,9 @@ class HiveNotes extends StatelessWidget {
           ),
         ),
       ),
-      home: const NotesView(),
+      home: NotesView(
+        notesBox: notesBox,
+      ),
     );
   }
 }

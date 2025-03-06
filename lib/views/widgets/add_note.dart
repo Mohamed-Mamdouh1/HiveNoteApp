@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:hive_note_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:hive_note_app/model/note_model.dart';
 
@@ -11,8 +12,8 @@ final GlobalKey<FormState> formKey = GlobalKey();
 AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
 
 class AddNote extends StatefulWidget {
-  const AddNote({Key? key}) : super(key: key);
-
+  const AddNote({Key? key, required this.notesBox}) : super(key: key);
+  final Box<NoteModel> notesBox;
   @override
   State<AddNote> createState() => _AddNoteState();
 }
@@ -25,9 +26,13 @@ class _AddNoteState extends State<AddNote> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AddNoteCubit(),
+      create: (context) => AddNoteCubit(widget.notesBox),
       child: Container(
-        padding:  EdgeInsets.only(left: 18,right: 18,top: 18, bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding: EdgeInsets.only(
+            left: 18,
+            right: 18,
+            top: 18,
+            bottom: MediaQuery.of(context).viewInsets.bottom),
         child: BlocConsumer<AddNoteCubit, AddNoteState>(
           listener: (context, state) {
             if (state is AddNoteFailure) {
