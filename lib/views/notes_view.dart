@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_note_app/cubits/notes_cubit/notes_cubit.dart';
 import 'package:hive_note_app/views/widgets/add_note.dart';
 import 'package:hive_note_app/views/widgets/note_view_body.dart';
 
 import '../model/note_model.dart';
 
 class NotesView extends StatelessWidget {
-  const NotesView({Key? key, required this.notesBox}) : super(key: key);
+  const NotesView({
+    Key? key,
+    required this.notesBox,
+  }) : super(key: key);
   final Box<NoteModel> notesBox;
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => NotesCubit(notesBox),
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
             showModalBottomSheet(
                 isScrollControlled: true,
                 shape: RoundedRectangleBorder(
@@ -28,10 +28,9 @@ class NotesView extends StatelessWidget {
                   );
                 });
           },
-          child: Icon(Icons.add),
-        ),
-        body: const NoteViewBody(),
+        child: const Icon(Icons.add),
       ),
+      body: const NoteViewBody(),
     );
   }
 }

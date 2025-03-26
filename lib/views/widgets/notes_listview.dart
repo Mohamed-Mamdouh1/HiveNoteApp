@@ -13,24 +13,25 @@ class NotesListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (ctx) {
-          return EditNoteView();
-        }));
-      },
-      child: BlocBuilder<NotesCubit, NotesState>(
-        builder: (context, state) {
-          List<NoteModel> notes =
+    return BlocBuilder<NotesCubit, NotesState>(
+      builder: (context, state) {
+        List<NoteModel> notes =
               BlocProvider.of<NotesCubit>(context).notes ?? [];
           return ListView.builder(
               itemCount: notes.length,
               padding: EdgeInsets.zero,
               itemBuilder: (context, index) {
-                return CustomCard(note: notes[index]);
-              });
-        },
-      ),
+              return GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (ctx) {
+                      return EditNoteView(
+                        noteModel: notes[index],
+                      );
+                    }));
+                  },
+                  child: CustomCard(note: notes[index]));
+            });
+      },
     );
   }
 }

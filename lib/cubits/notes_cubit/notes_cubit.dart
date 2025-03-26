@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:hive_note_app/constant.dart';
 import 'package:hive_note_app/model/note_model.dart';
 import 'package:meta/meta.dart';
 
@@ -13,5 +12,6 @@ class NotesCubit extends Cubit<NotesState> {
 
   fetchAllNotes() {
     notes = notesBox.values.toList();
+    emit(NotesSuccess());
   }
 }

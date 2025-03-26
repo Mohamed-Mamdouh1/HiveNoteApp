@@ -7,7 +7,9 @@ import 'custom_app_bar.dart';
 import 'notes_listview.dart';
 
 class NoteViewBody extends StatefulWidget {
-  const NoteViewBody({Key? key}) : super(key: key);
+  const NoteViewBody({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<NoteViewBody> createState() => _NoteViewBodyState();
@@ -29,7 +31,10 @@ class _NoteViewBodyState extends State<NoteViewBody> {
           SizedBox(
             height: 20,
           ),
-          CustomAppBar(text: "Notes",icon: Icons.search,),
+          CustomAppBar(
+            text: "Notes",
+            icon: Icons.search,
+          ),
           Expanded(child: NotesListView())
         ],
       ),

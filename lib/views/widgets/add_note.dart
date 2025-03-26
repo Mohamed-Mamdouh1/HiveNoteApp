@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_note_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:hive_note_app/model/note_model.dart';
+import 'package:intl/intl.dart';
 
-
+import '../../cubits/notes_cubit/notes_cubit.dart';
 import 'custom_button.dart';
 import 'custom_text_field.dart';
 
@@ -39,12 +40,13 @@ class _AddNoteState extends State<AddNote> {
               print("Failed to add note ");
             }
             if (state is AddNoteSuccess) {
+              BlocProvider.of<NotesCubit>(context).fetchAllNotes();
               Navigator.pop(context);
             }
           },
           builder: (context, state) {
             return AbsorbPointer(
-              absorbing: state is AddNoteLoading ? true :false,
+              absorbing: state is AddNoteLoading ? true : false,
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,15 +58,17 @@ class _AddNoteState extends State<AddNote> {
                     BlocBuilder<AddNoteCubit, AddNoteState>(
                       builder: (context, state) {
                         return CustomButton(
-                          isLoading:  state is AddNoteLoading ? true : false,
+                          isLoading: state is AddNoteLoading ? true : false,
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
                               formKey.currentState!.save();
-
+                              var date = DateTime.now();
+                              var formattedDate =
+                                  DateFormat("EEE, MMM d").format(date);
                               var noteModel = NoteModel(
                                   title: title.text,
                                   content: content.text,
-                                  date: DateTime.now().toString(),
+                                  date: formattedDate,
                                   color: Colors.deepPurpleAccent.value);
                               BlocProvider.of<AddNoteCubit>(context)
                                   .addNote(noteModel);
