@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_note_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:hive_note_app/cubits/notes_cubit/notes_cubit.dart';
 import 'package:hive_note_app/model/note_model.dart';
 
 class CustomCard extends StatelessWidget {
-  const CustomCard({Key? key, required this.note}) : super(key: key);
+  const CustomCard({
+    Key? key,
+    required this.note,
+  }) : super(key: key);
   final NoteModel note;
+
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Color(note.color),
       child: SizedBox(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -6,6 +6,7 @@ import 'package:hive_note_app/model/note_model.dart';
 import 'package:intl/intl.dart';
 
 import '../../cubits/notes_cubit/notes_cubit.dart';
+import 'colors_list.dart';
 import 'custom_button.dart';
 import 'custom_text_field.dart';
 
@@ -52,9 +53,6 @@ class _AddNoteState extends State<AddNote> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     AddNoteForm(title: title, content: content),
-                    const SizedBox(
-                      height: 32,
-                    ),
                     BlocBuilder<AddNoteCubit, AddNoteState>(
                       builder: (context, state) {
                         return CustomButton(
@@ -66,10 +64,13 @@ class _AddNoteState extends State<AddNote> {
                               var formattedDate =
                                   DateFormat("EEE, MMM d").format(date);
                               var noteModel = NoteModel(
-                                  title: title.text,
-                                  content: content.text,
-                                  date: formattedDate,
-                                  color: Colors.deepPurpleAccent.value);
+                                title: title.text,
+                                content: content.text,
+                                date: formattedDate,
+                                color: BlocProvider.of<AddNoteCubit>(context)
+                                    .color
+                                    .value,
+                              );
                               BlocProvider.of<AddNoteCubit>(context)
                                   .addNote(noteModel);
                             } else {
@@ -120,7 +121,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
             controller: widget.title,
             hintText: "Title",
             onSaved: (value) {
-              title = value;
+              widget.title.text = value!;
             },
           ),
           const SizedBox(
@@ -128,12 +129,13 @@ class _AddNoteFormState extends State<AddNoteForm> {
           ),
           CustomTextFiled(
             onSaved: (value) {
-              subtitle = value;
+              widget.content.text = value!;
             },
             controller: widget.content,
             maxLines: 5,
             hintText: "Content",
           ),
+          const ColorsList()
         ],
       ),
     );

@@ -29,7 +29,9 @@ class NotesListView extends StatelessWidget {
                       );
                     }));
                   },
-                  child: CustomCard(note: notes[index]));
+                  child: CustomCard(
+                    note: notes[index],
+                  ));
             });
       },
     );

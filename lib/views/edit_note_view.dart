@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_note_app/cubits/notes_cubit/notes_cubit.dart';
 import 'package:hive_note_app/model/note_model.dart';
+import 'package:hive_note_app/views/widgets/colors_list.dart';
 import 'package:hive_note_app/views/widgets/custom_app_bar.dart';
 import 'package:hive_note_app/views/widgets/custom_text_field.dart';
 
@@ -59,6 +60,10 @@ class _EditNoteViewState extends State<EditNoteView> {
               maxLines: 4,
               oldData: widget.noteModel.content,
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            const ColorsList(),
           ],
         ),
       ),
